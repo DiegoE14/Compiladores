@@ -1,0 +1,4 @@
+" este es un ejemplo de cadena" 
+2999   34.98   "iva_1"
+loestrada@unicesmag.edu.co
+
