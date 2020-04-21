@@ -11,39 +11,39 @@ import java.util.ArrayList;
     public ArrayList<Token> ts = new ArrayList<Token>();
 %}
 
-//ALFABETOS
-letra = [a-zA-Z]
-numero = [0-9]
-espacio = [\n\t\r ]
+//ALPHABETS
+lyrics = [a-zA-Z]
+number = [0-9]
+espace = [\n\t\r ]
 p = [$]
-signo = [><]
-signo2 = [+-]
+sign = [><]
+sign2 = [+-]
 i = [=]
 d = [!]
 x=[&]
 y=[|]
 
-//EXPRESIONES REGULARES
-palabra = {p}({numero}|{letra})+
-condicion1 = ({palabra}|{numero}+)({signo}|{signo}{i}|{d}{i})({palabra}|{numero}+)
-condicion = {condicion1}({espacio}({x}{x}|{y}{y}){espacio}{condicion1})*
+//REGULAR EXPRESSIONS
+word = {p}({number}|{lyrics})+
+condition1 = ({word}|{number}+)({sign}|{sign}{i}|{d}{i})({word}|{number}+)
+condition = {condition1}({espace}({x}{x}|{y}{y}){espace}{condition1})*
 
-asignacion = {palabra}{i}({palabra}|{numero}+)({signo2}({palabra}|{numero}+))*
+assignment = {word}{i}({word}|{number}+)({sign2}({word}|{number}+))*
 
-er = "while"{espacio}"("{condicion}")"{espacio}"{"{asignacion}"}"
+re = "while"{espace}"("{condition}")"{espace}"{"{assignment}"}"
 
 
 %%
-//PALABRAS RESEVRVADAS 
-"{"  {ts.add(new Token("Abrir llaves: attributos",yytext()));}
-"}"  {ts.add(new Token("Cerrar llaves: attributos",yytext()));}
-"("  {ts.add(new Token("Abrir parentesis: attributos",yytext()));}
-")"  {ts.add(new Token("Cerrar parentesis: attributos",yytext()));}
-"while"  {ts.add(new Token("while: attributos",yytext()));}
+//RESERVED WORDS 
+"{"  {ts.add(new Token("Open keys: attributes",yytext()));}
+"}"  {ts.add(new Token("close keys: attributes",yytext()));}
+"("  {ts.add(new Token("Open parenthesis: attributes",yytext()));}
+")"  {ts.add(new Token("Close parenthesis: attributes",yytext()));}
+"while"  {ts.add(new Token("while: attributes",yytext()));}
 
-//TOKENS - ER
-{er}  {ts.add(new Token("Comando PHP",yytext()));}
-{condicion}  {ts.add(new Token("Atributo condicion",yytext()));}
-{asignacion}  {ts.add(new Token("Atributo asignacion",yytext()));}
-{espacio}  {}
-. {errlex+=("\nError Lexico, en linea: " + (yyline+1) + ", " + (yycolumn+1) + " caracter no válido "  + yytext());} 
+//TOKENS - RE
+{re}  {ts.add(new Token("Command PHP",yytext()));}
+{condition}  {ts.add(new Token("Condition Attribute",yytext()));}
+{assignment}  {ts.add(new Token("Assignment attribute",yytext()));}
+{espace}  {}
+. {errlex+=("\nLexical error, in line: " + (yyline+1) + ", in column: " + (yycolumn+1) + " invalid character: "  + yytext());} 

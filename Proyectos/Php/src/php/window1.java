@@ -17,58 +17,58 @@ import java.io.IOException;
  *
  * @author Udenar
  */
-public class Ventana1 extends javax.swing.JFrame {
+public class window1 extends javax.swing.JFrame {
 
     /**
      * Creates new form Ventana1
      */
-    public Ventana1() {
+    public window1() {
         initComponents();
-        this.setLocationRelativeTo(null); //centrar la ventana
-        open(); // abrir el archivo
+        this.setLocationRelativeTo(null); //center the window
+        open(); // open the archive
     }
     
     
-    private String archivo = "src/php/fuente.txt";
+    private String archive = "src/php/source.txt";
 
     private void open() {
         try {
-            String cadena = "";
-            FileReader f = new FileReader(archivo);
+            String string = "";
+            FileReader f = new FileReader(archive);
             BufferedReader b = new BufferedReader(f);
-            cadena = b.readLine();
-            while (cadena != null) {
-                txtFuente.append(cadena + "\n");
-                cadena = b.readLine();
+            string = b.readLine();
+            while (string != null) {
+                txtFuente.append(string + "\n");
+                string = b.readLine();
             }
             b.close();
         } catch (Exception e) {
-            txtResultados.setText("Error de aplicación " + e.getMessage());
+            txtResultados.setText("Application error " + e.getMessage());
         }
     }
 
     private void save() {
         try {
-            FileWriter f = new FileWriter(archivo);
+            FileWriter f = new FileWriter(archive);
             BufferedWriter b = new BufferedWriter(f);
             b.write(txtFuente.getText());
             b.close();
         } catch (Exception e) {
-            txtResultados.setText("Error de aplicación " + e.getMessage());
+            txtResultados.setText("Application error " + e.getMessage());
         }
     }
 
     private void compiler() {
         try {
-            String ruta = new File(archivo).getAbsolutePath();
-            Lexer lex = new Lexer(new FileReader(ruta));
+            String route = new File(archive).getAbsolutePath();
+            Lexer lex = new Lexer(new FileReader(route));
             lex.yylex();
 
             if (lex.errlex.isEmpty()) {
-                txtResultados.setText("Compilación Correcta\n");
+                txtResultados.setText("Correct compilation\n");
                 txtResultados.append(lex.ts.toString());
             } else {
-                txtResultados.setText("Compilación Incorrecta");
+                txtResultados.setText("Wrong compilation");
                 txtResultados.append(lex.errlex);
             }
         } catch (IOException e) {
@@ -176,21 +176,23 @@ public class Ventana1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ventana1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(window1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ventana1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(window1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ventana1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(window1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ventana1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(window1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ventana1().setVisible(true);
+                new window1().setVisible(true);
             }
         });
     }

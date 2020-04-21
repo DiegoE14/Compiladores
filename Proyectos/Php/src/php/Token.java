@@ -3,16 +3,16 @@ package php;
 
 public class Token {
     public String id;
-    public String contenido;
+    public String content;
 
-    public Token(String id, String contenido) {
+    public Token(String id, String content) {
         this.id = id;
-        this.contenido = contenido;
+        this.content = content;
     }
 
     @Override
     public String toString() {
-        return "\nToken{" + "id=" + id + ", contenido=" + contenido + '}';
+        return "\nToken{" + "id=" + id + ", content=" + content + '}';
     }
     
     
