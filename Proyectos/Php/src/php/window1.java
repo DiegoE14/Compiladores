@@ -12,40 +12,47 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.*;
 
 /**
  *
  * @author Udenar
  */
 public class window1 extends javax.swing.JFrame {
-
+    JFileChooser selected = new JFileChooser();
+    File archive;
+    Management management = new Management();
     /**
      * Creates new form Ventana1
      */
     public window1() {
         initComponents();
         this.setLocationRelativeTo(null); //center the window
-        open(); // open the archive
     }
     
+    /*Correjir esta variable "archive2" para que el botón "COMPILER" funcione
+      Debido que esa variable compila un archivo con una ruta estatica y no con 
+      la ruta del metododo que esta en el boton "OPEN"
+    */
+    private String archive2 = "src/php/source.txt";
     
-    private String archive = "src/php/source.txt";
-
-    private void open() {
-        try {
-            String string = "";
-            FileReader f = new FileReader(archive);
-            BufferedReader b = new BufferedReader(f);
-            string = b.readLine();
-            while (string != null) {
-                txtFuente.append(string + "\n");
-                string = b.readLine();
+    private void saveas(){
+        if (selected.showDialog(null, "save template")==JFileChooser.APPROVE_OPTION){
+            archive = selected.getSelectedFile();
+            if(archive.getName().endsWith("txt")){
+                String contend = txtFuente.getText();
+                String answer = management.SaveText(archive, contend);
+                if(answer!=null){
+                   JOptionPane.showMessageDialog(null, answer); 
+                }else{
+                    JOptionPane.showMessageDialog(null, "error saving text");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "the template must be saved in .txt format");
             }
-            b.close();
-        } catch (Exception e) {
-            txtResultados.setText("Application error " + e.getMessage());
         }
     }
+
 
     private void save() {
         try {
@@ -54,13 +61,13 @@ public class window1 extends javax.swing.JFrame {
             b.write(txtFuente.getText());
             b.close();
         } catch (Exception e) {
-            txtResultados.setText("Application error " + e.getMessage());
+            saveas();
         }
     }
 
     private void compiler() {
         try {
-            String route = new File(archive).getAbsolutePath();
+            String route = new File(archive2).getAbsolutePath();
             Lexer lex = new Lexer(new FileReader(route));
             lex.yylex();
 
@@ -85,26 +92,25 @@ public class window1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtFuente = new javax.swing.JTextArea();
         cmdCompilar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtResultados = new javax.swing.JTextArea();
+        open = new javax.swing.JButton();
+        saveas = new javax.swing.JButton();
+        save = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Analizador Léxico");
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("Analizador Léxico - Condicionales");
+        setTitle("Lexico analyzer");
 
         txtFuente.setColumns(20);
         txtFuente.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         txtFuente.setRows(5);
         jScrollPane1.setViewportView(txtFuente);
 
-        cmdCompilar.setText("Guardar y Compilar");
+        cmdCompilar.setText("COMPILER");
         cmdCompilar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdCompilarActionPerformed(evt);
@@ -119,6 +125,27 @@ public class window1 extends javax.swing.JFrame {
         txtResultados.setRows(5);
         jScrollPane2.setViewportView(txtResultados);
 
+        open.setText("Open");
+        open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openActionPerformed(evt);
+            }
+        });
+
+        saveas.setText("save as");
+        saveas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveasActionPerformed(evt);
+            }
+        });
+
+        save.setText("Save");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,22 +153,29 @@ public class window1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(80, 80, 80)
-                        .addComponent(cmdCompilar, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addGap(192, 192, 192)
+                        .addComponent(saveas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(open)
+                        .addGap(9, 9, 9)
+                        .addComponent(save)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmdCompilar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cmdCompilar))
+                    .addComponent(cmdCompilar)
+                    .addComponent(open)
+                    .addComponent(saveas)
+                    .addComponent(save))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -155,9 +189,33 @@ public class window1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCompilarActionPerformed
-        save();
         compiler();
     }//GEN-LAST:event_cmdCompilarActionPerformed
+
+    private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
+        // TODO add your handling code here:
+        if (selected.showDialog(null, "OPEN FILE")==JFileChooser.APPROVE_OPTION){
+            archive = selected.getSelectedFile();
+            if(archive.canRead()){
+                if(archive.getName().endsWith("txt")){
+                    String content = management.OpenText(archive);
+                    txtFuente.setText(content);
+                }else{
+                    JOptionPane.showMessageDialog(null, "please select a valid file (.txt)");
+                }
+            }
+        }
+    }//GEN-LAST:event_openActionPerformed
+
+    private void saveasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveasActionPerformed
+        // TODO add your handling code here:
+        saveas();
+    }//GEN-LAST:event_saveasActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        // TODO add your handling code here:
+        save();
+    }//GEN-LAST:event_saveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,10 +257,12 @@ public class window1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmdCompilar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton open;
+    private javax.swing.JButton save;
+    private javax.swing.JButton saveas;
     private javax.swing.JTextArea txtFuente;
     private javax.swing.JTextArea txtResultados;
     // End of variables declaration//GEN-END:variables
