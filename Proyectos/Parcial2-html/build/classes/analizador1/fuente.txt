@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor. -->
+<html>
+    <head>
+        <title>Pagina de Prueba</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>Pagina de Prueba</h1>
+        <img src="home.jpg" alt="Bienvenido">
+        <form>
+            <h2>Datos de Ingreso</h2>
+            <label>Nombre:</label>
+            <input type="text" id="name" name="user_name">
+            <label>Correo electronico:</label>
+            <input type="text" id="mail" name="user_mail">
+            
+            <h2>Otros Datos</h2>
+            <label>Genero:</label>
+            <select>
+                <option>Masculino</option>
+                <option>Femenino</option>
+            </select>
+            <label>Estado Civil:</label>
+            <select>
+                <option>Casado</option>
+                <option>Divorciado</option>
+                <option>Soltero</option>
+                <option>Union Libre</option>
+            </select>
+        </form>
+        <h3>Gracias por la visita</h3>
+        <img src="adios.jg" alt="Despedida">
+    </body>
+</html>
