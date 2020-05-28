@@ -1,0 +1,7 @@
+for var = 1 to 100 
+  a = 3 + x;
+  b = (3 + x) / 4;
+  c = 6 - 4;  
+    
+endfor
+

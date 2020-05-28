@@ -1,0 +1,28 @@
+package sintactico1;
+import java_cup.runtime.*;
+
+parser code {:
+    public String errsin="";
+    public void syntax_error (Symbol x){
+        errsin+="\nError Sintaxis en linea " + (x.left+1) + "," + (x.right+1);
+        throw new UnsupportedOperationException (errsin);
+    }
+:};
+
+terminal pi, pd, num, id, op, xfor, asignacion, to, endfor, fin_i; 
+non terminal S, E, T, F, C;
+
+F ::= xfor id asignacion T to T C endfor;
+C ::= S | C S;
+S ::= id asignacion E fin_i;
+E ::= T;
+E ::= E op T;
+T ::= num | id;
+T ::= pi E pd;
+
+
+
+
+
+
+

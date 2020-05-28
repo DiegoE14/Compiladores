@@ -1,0 +1,6 @@
+<table> 
+<tr>  <td>hola </td><td>hola </td><td>hola </td></tr>
+<tr><td>hola </td></tr>
+<tr><td>hola </td></tr>
+<tr><td>hola </td></tr>
+</table> 

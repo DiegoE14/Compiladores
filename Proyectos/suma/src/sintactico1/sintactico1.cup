@@ -1,0 +1,17 @@
+package sintactico1;
+import java_cup.runtime.*;
+
+parser code {:
+    public String errsin="";
+    public void syntax_error (Symbol x){
+        errsin+="\nError Sintaxis en linea " + (x.left+1) + "," + (x.right+1);
+        throw new UnsupportedOperationException (errsin);
+    }
+:};
+
+terminal mas, num;
+non terminal S, T;
+
+S ::= S mas T;
+S ::= T;
+T ::= num;

@@ -1,0 +1,29 @@
+package sintactico1;
+import java_cup.runtime.*;
+
+parser code {:
+    public String errsin="";
+    public void syntax_error (Symbol x){
+        errsin+="\nError Sintaxis en linea " + (x.left+1) + "," + (x.right+1);
+        throw new UnsupportedOperationException (errsin);
+    }
+:};
+
+terminal ti, tf, tri, trf, tdi, tdf, thi, thf, cad;
+non terminal T, I, F, C, R, D, X, H;
+
+T ::= I C F;
+I ::= ti;
+F ::= tf;
+C ::= R | C R;
+R ::= tri D trf;
+D ::= X | D X;
+X ::= tdi H tdf;
+X ::= thi H thf;
+H ::=  cad;
+
+
+
+
+
+
